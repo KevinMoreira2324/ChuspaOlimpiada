@@ -52,7 +52,7 @@ La plataforma resuelve los siguientes problemas clave:
 *(Instrucciones de uso rápido próximamente)*
 
 ## Documentación
-Ver la carpeta [docs/](docs/) y la especificación de [Tipos de Pruebas](docs/docs/tipos-de-prueba.md).
+Ver la carpeta [docs/](docs/) y la especificación de [Tipos de Pruebas](docs/tipos-de-prueba.md).
 
 ## Estructura del repositorio
 
