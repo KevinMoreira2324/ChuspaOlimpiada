@@ -1,7 +1,16 @@
 # ChuspaOlimpiada
 
-> Chuspa Olimpiada es una plataforma digital para la gestión, registro y seguimiento de 
-la Olimpiada Científica de la Facultad Nacional de Ingeniería (FNI).
+## ¿Qué es?
+
+ChuspaOlimpiada es un proyecto de plataforma digital orientado a apoyar la organización, administración y seguimiento de las Olimpiadas de Ciencia y Tecnología de la Facultad Nacional de Ingeniería (FNI) de la Universidad Técnica de Oruro.
+
+El proyecto busca centralizar la información de las diferentes ediciones de las Olimpiadas, considerando las áreas de competencia, participantes, unidades educativas, inscripciones, categorías, fechas, modalidades de evaluación y resultados, de acuerdo con las convocatorias oficiales de la FNI.
+
+Asimismo, contempla el seguimiento de los resultados y del Medallero General, así como la información relacionada con la premiación, el Trofeo Rotatorio y los reconocimientos establecidos en las convocatorias oficiales.
+
+La plataforma tiene como propósito facilitar la gestión y consulta de la información de las Olimpiadas, manteniendo como referencia las disposiciones oficiales de cada edición.
+
+La arquitectura del sistema y las tecnologías que se utilizarán se encuentran pendientes de definición y aprobación por parte del equipo del proyecto.
 
 ## Objetivo del Proyecto
 
@@ -43,7 +52,7 @@ La plataforma resuelve los siguientes problemas clave:
 *(Instrucciones de uso rápido próximamente)*
 
 ## Documentación
-Ver la carpeta [docs/](docs/) y la especificación de [Tipos de Pruebas](docs/docs/tipos-de-prueba.md).
+Ver la carpeta [docs/](docs/) y la especificación de [Tipos de Pruebas](docs/tipos-de-prueba.md).
 
 ## Estructura del repositorio
 
