@@ -2,13 +2,15 @@
 
 ## ¿Qué es?
 
-ChuspaOlimpiada es una plataforma web destinada a centralizar y facilitar la organización, administración y seguimiento de las Olimpiadas Científicas de la Facultad Nacional de Ingeniería (FNI) de la Universidad Técnica de Oruro.
+ChuspaOlimpiada es un proyecto de plataforma digital orientado a apoyar la organización, administración y seguimiento de las Olimpiadas de Ciencia y Tecnología de la Facultad Nacional de Ingeniería (FNI) de la Universidad Técnica de Oruro.
 
-La plataforma permite gestionar las convocatorias, instituciones educativas, participantes e inscripciones, organizar los cronogramas de las pruebas, registrar calificaciones y publicar resultados oficiales.
+El proyecto busca centralizar la información de las diferentes ediciones de las Olimpiadas, considerando las áreas de competencia, participantes, unidades educativas, inscripciones, categorías, fechas, modalidades de evaluación y resultados, de acuerdo con las convocatorias oficiales de la FNI.
 
-También contempla la gestión del medallero general, el historial del Trofeo Rotatorio, la generación de planillas para el ingreso directo a la FNI y la emisión de certificados digitales y credenciales.
+Asimismo, contempla el seguimiento de los resultados y del Medallero General, así como la información relacionada con la premiación, el Trofeo Rotatorio y los reconocimientos establecidos en las convocatorias oficiales.
 
-Además, facilita la comunicación entre organizadores e instituciones participantes mediante avisos y comunicados, con acceso a las diferentes funciones según los roles y permisos de cada usuario.
+La plataforma tiene como propósito facilitar la gestión y consulta de la información de las Olimpiadas, manteniendo como referencia las disposiciones oficiales de cada edición.
+
+La arquitectura del sistema y las tecnologías que se utilizarán se encuentran pendientes de definición y aprobación por parte del equipo del proyecto.
 
 ## Objetivo del Proyecto
 
