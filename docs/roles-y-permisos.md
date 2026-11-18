@@ -1,0 +1,5 @@
+| Rol | Responsabilidades previstas | Acceso previsto |
+| :--- | :--- | :--- |
+| Tutor | Registrar o acompañar inscripciones, verificar datos, consultar comprobantes y descargar certificados digitales. | Participantes bajo su responsabilidad. |
+| Coordinador | Organizar áreas asignadas, cronogramas, aulas, avisos autorizados, así como generar e imprimir certificados. | Participantes, horarios y comunicaciones de su ámbito.|
+| Administrador | Configurar periodos y parámetros; gestionar cuentas, roles, permisos, reportes, auditoría, publicación oficial de resultados y planillas de ingreso directo. Configurar periodos y parámetros; gestionar cuentas, roles, permisos, reportes, auditoría, publicación oficial de resultados, planillas de ingreso directo y gestión de documentos adjuntos. | Datos necesarios para la administración, sujetos a controles de acceso. |
