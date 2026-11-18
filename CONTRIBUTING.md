@@ -1,24 +1,28 @@
 # Cómo contribuir a este proyecto
 
-Gracias por tu interés en contribuir. Este proyecto usa
+Gracias por tu interés en contribuir a **ChuspaOlimpiada**. Este proyecto usa
 el **Forking Workflow**. Lee este documento antes de empezar.
 
 ---
 
 ## Flujo de trabajo
 
+### 0. Elige un issue y pide que te lo asignen
+Revisa los issues abiertos que no tengan a nadie asignado, comenta que quieres
+trabajarlo y **espera a que te lo asignen antes de empezar**.
+
 ### 1. Haz fork del repositorio
 Botón **Fork** en la esquina superior derecha de GitHub.
 
 ### 2. Clona tu fork
 ```bash
-git clone https://github.com/TU-USUARIO/PROYECTO.git
-cd PROYECTO
+git clone https://github.com/TU-USUARIO/ChuspaOlimpiada.git
+cd ChuspaOlimpiada
 ```
 
 ### 3. Agrega el repo original como upstream
 ```bash
-git remote add upstream https://github.com/sis-inf/PROYECTO.git
+git remote add upstream https://github.com/sis-inf/ChuspaOlimpiada.git
 ```
 
 ### 4. Sincroniza antes de trabajar
@@ -32,18 +36,24 @@ git pull upstream dev
 git checkout -b tipo/descripcion-corta
 ```
 
+Si el issue trae una "Rama sugerida", usa ese nombre.
+
 Ejemplos de nombres de rama:
 
-feat/endpoint-metricas-cpu
-docs/readme-instalacion
-fix/calculo-ram-incorrecto
-test/pruebas-unitarias-cpu
+```
+docs/consulta-convocatoria
+feat/registro-individual
+fix/validacion-grado-por-area
+test/reglas-de-inscripcion
 chore/configurar-github-actions
-security/analisis-dependencias
+security/proteccion-datos-menores
+```
 
 ### 6. Trabaja y haz commits pequeños
+Agrega solo los archivos que tu issue pide y revisa antes de confirmar:
 ```bash
-git add .
+git status
+git add ruta/del/archivo
 git commit -m "tipo: descripción corta en presente"
 ```
 
@@ -53,8 +63,9 @@ git push origin tipo/descripcion-corta
 ```
 
 ### 8. Abre un Pull Request
-- Base: `sis-inf/PROYECTO` → rama `dev`
-- Compare: `TU-USUARIO/PROYECTO` → tu rama
+- Base: `sis-inf/ChuspaOlimpiada` → rama `dev`
+- Compare: `TU-USUARIO/ChuspaOlimpiada` → tu rama
+- En la descripción escribe `Closes #N` (con el número de tu issue) para que se cierre solo al aceptar el PR.
 
 ---
 
@@ -69,15 +80,17 @@ git push origin tipo/descripcion-corta
 | `chore:` | Configuración o CI/CD |
 | `refactor:` | Mejora sin cambiar comportamiento |
 | `security:` | Mejora de seguridad |
-| `data:` | Análisis de datos |
+| `data:` | Datos |
 
 ### Ejemplos
 
-feat: agregar endpoint /metrics para CPU
-fix: corregir cálculo de porcentaje de RAM
-docs: agregar guía de instalación en Windows
-test: agregar pruebas unitarias para módulo de disco
+```
+feat: agregar registro individual de estudiantes
+fix: corregir validación de grado por área
+docs: explicar cómo consultar y descargar la convocatoria
+test: agregar pruebas del límite de 3 áreas
 chore: configurar GitHub Actions para CI
+```
 
 ---
 
@@ -85,6 +98,7 @@ chore: configurar GitHub Actions para CI
 
 - ❌ Nunca hagas push directo a `main` o `dev`
 - ❌ Nunca trabajes directamente en `main` o `dev`
+- ❌ No modifiques archivos que tu issue no pide
 - ✅ Un issue = una rama = un PR
 - ✅ Todo PR debe referenciar su issue con `Closes #N`
 - ✅ El PR debe pasar el CI antes de ser mergeado
@@ -108,7 +122,7 @@ chore: configurar GitHub Actions para CI
 
 ## ¿No sabes por dónde empezar?
 
-1. Revisa los issues abiertos con la etiqueta `good first issue`
+1. Revisa los issues abiertos que no tengan a nadie asignado
 2. Comenta en el issue que quieres trabajarlo
 3. Espera confirmación antes de empezar
 4. Sigue los pasos de este documento
