@@ -1,0 +1,20 @@
+:root { --azul: #1f4e8c; --rojo: #b3261e; --verde: #1b6e3c; --gris: #666; }
+* { box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; margin: 0; background: #f4f6f9; color: #222; }
+main { max-width: 640px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+h1 { color: var(--azul); font-size: 1.5rem; }
+fieldset { background: #fff; border: 1px solid #d5dbe3; border-radius: 8px; margin: 0 0 1rem; padding: 1rem; }
+legend { font-weight: 600; padding: 0 .4rem; color: var(--azul); }
+.campo { margin-bottom: .9rem; }
+label { display: block; font-size: .95rem; margin-bottom: .25rem; }
+input[type="text"], select { width: 100%; padding: .55rem; border: 1px solid #b8c0cc; border-radius: 6px; font-size: 1rem; }
+input:focus, select:focus, button:focus-visible { outline: 3px solid #8fb4e8; outline-offset: 1px; }
+.area { display: flex; gap: .5rem; align-items: center; padding: .35rem 0; }
+.area.bloqueada { color: #9aa0a8; }
+.ayuda { color: var(--gris); font-size: .9rem; margin: .2rem 0 .6rem; }
+.error { color: var(--rojo); font-size: .85rem; margin: .25rem 0 0; min-height: 1em; }
+.estado { font-weight: 600; color: var(--rojo); }
+.estado.completo { color: var(--verde); }
+button { background: var(--azul); color: #fff; border: 0; border-radius: 6px; padding: .7rem 1.2rem; font-size: 1rem; cursor: pointer; }
+button:disabled { background: #a9b4c4; cursor: not-allowed; }
+#siguiente-paso { background: #fff; border: 1px solid var(--verde); border-radius: 8px; padding: 1rem; }

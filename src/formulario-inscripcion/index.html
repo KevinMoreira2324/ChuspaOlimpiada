@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inscripción – Olimpiada de Ciencia y Tecnología FNI</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <main>
+    <h1>Inscripción de estudiante</h1>
+    <p class="ayuda">Todos los campos son obligatorios. Máximo 3 áreas por estudiante.</p>
+
+    <form id="formulario" novalidate>
+      <fieldset>
+        <legend>Datos personales</legend>
+        <div class="campo">
+          <label for="ci">Cédula de Identidad (CI)</label>
+          <input id="ci" name="ci" type="text" autocomplete="off" inputmode="numeric">
+          <p class="error" id="error-ci" role="alert"></p>
+        </div>
+        <div class="campo">
+          <label for="nombres">Nombres</label>
+          <input id="nombres" name="nombres" type="text" autocomplete="off">
+          <p class="error" id="error-nombres" role="alert"></p>
+        </div>
+        <div class="campo">
+          <label for="apellidos">Apellidos</label>
+          <input id="apellidos" name="apellidos" type="text" autocomplete="off">
+          <p class="error" id="error-apellidos" role="alert"></p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Datos académicos e institucionales</legend>
+        <div class="campo">
+          <label for="grado">Grado de secundaria</label>
+          <select id="grado" name="grado">
+            <option value="">Selecciona…</option>
+            <option value="1">1.º de secundaria</option>
+            <option value="2">2.º de secundaria</option>
+            <option value="3">3.º de secundaria</option>
+            <option value="4">4.º de secundaria</option>
+            <option value="5">5.º de secundaria</option>
+            <option value="6">6.º de secundaria</option>
+          </select>
+          <p class="error" id="error-grado" role="alert"></p>
+        </div>
+        <div class="campo">
+          <label for="colegio">Colegio / Unidad educativa</label>
+          <input id="colegio" name="colegio" type="text" autocomplete="off">
+          <p class="error" id="error-colegio" role="alert"></p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Áreas de competencia</legend>
+        <p class="ayuda" id="ayuda-areas"></p>
+        <div id="lista-areas"></div>
+        <p class="error" id="error-areas" role="alert"></p>
+      </fieldset>
+
+      <p id="estado" class="estado" aria-live="polite">Formulario incompleto</p>
+      <button type="button" id="btn-continuar" disabled>Continuar a información de pago</button>
+    </form>
+
+    <section id="siguiente-paso" hidden>
+      <h2>Registro validado</h2>
+      <p>Siguiente paso: generación de información de pago (pendiente de implementar en otro issue).</p>
+    </section>
+  </main>
+
+  <script src="reglas.js"></script>
+  <script src="formulario.js"></script>
+</body>
+</html>
