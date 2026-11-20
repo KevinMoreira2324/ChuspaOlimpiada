@@ -43,6 +43,89 @@ La modalidad grupal no permite omitir requisitos individuales ni exceder los pla
 
 Las verificaciones deben repetirse **al confirmar** para evitar registros inválidos si cambian los datos, horarios o fechas durante el llenado.
 
+### 3.1 Validación de identidad (propuesta)
+
+La validación de identidad busca asegurar que cada inscripción corresponda a un estudiante real y que sus datos estén completos. Los campos exactos deben confirmarse con la organización de las Olimpiadas FNI. Por protección de datos de menores de edad, se recomienda pedir **solo los datos necesarios**. Los campos propuestos coinciden con los de la entidad `PARTICIPANTE` de [modelo-datos.md](modelo-datos.md) (`nombres`, `apellidos`, `documento_identidad`, `unidad_educativa`, `grado`, `contacto_responsable`).
+
+**Datos de identidad propuestos**
+
+| Dato | Regla de validación |
+| --- | --- |
+| Nombres y apellidos | Obligatorios. Solo letras, espacios, tildes y guiones. Sin números ni símbolos. |
+| Documento de identidad | Obligatorio. Se normaliza antes de comparar (sin espacios ni guiones, en mayúsculas). Es el dato que identifica a la persona en el sistema. |
+| Unidad educativa | Obligatoria. Se elige de una lista, no se escribe libremente, para evitar nombres distintos de un mismo colegio. |
+| Grado o curso | Obligatorio. Se elige de una lista (1.º a 6.º de secundaria). |
+| Datos de contacto del tutor o responsable | Obligatorios. Se define con la organización cuáles son (correo, teléfono). |
+
+**Cuándo se valida**
+
+1. **En tiempo real:** mientras se completa el formulario, cada campo se revisa al salir de él y se muestra el error junto al campo.
+2. **Al confirmar:** se repiten todas las validaciones antes de guardar la inscripción, porque los datos pueden haber cambiado durante el llenado.
+3. **Antes de iniciar el pago:** no se genera el importe a pagar si hay errores pendientes.
+
+**Respuesta ante incumplimiento**
+
+| Situación | Respuesta del sistema |
+| --- | --- |
+| Campo obligatorio vacío | Marcar el campo y no permitir confirmar. |
+| Formato inválido (por ejemplo, números en un nombre) | Mostrar un mensaje que explique el formato esperado. |
+| Documento de identidad con formato incorrecto | Solicitar corrección antes de continuar. |
+| Datos inconsistentes entre sí | Pedir al responsable que los revise. |
+
+Los mensajes deben ser claros y decir **qué corregir**, sin mostrar datos personales de otras inscripciones.
+
+### 3.2 Detección de duplicados (propuesta)
+
+Una inscripción es duplicada cuando la **misma persona** intenta registrarse más de una vez en la **misma área de la misma edición**. Se detecta con la combinación **documento de identidad normalizado + edición + área**.
+
+| Situación | Qué hace el sistema |
+| --- | --- |
+| El mismo tutor intenta inscribir de nuevo al mismo estudiante en la misma área | Bloquear el registro y mostrar la inscripción ya existente. |
+| Otro tutor o delegación ya inscribió a ese estudiante en esa área | Bloquear el registro e informar que ya existe una inscripción. **No** mostrar datos personales del otro registro; indicar que contacte a la organización si hay una duda. |
+| El mismo documento escrito con formato distinto (espacios, guiones, minúsculas) | Tratarlo como el mismo documento, gracias a la normalización. |
+| El estudiante ya está en otra área distinta | **No** es duplicado. Aplica el control del máximo de áreas (ver 3.3). |
+| El mismo estudiante en la misma área con distinta categoría o etapa | Es duplicado: una persona solo tiene una inscripción por área y edición. |
+| Dos tutores intentan inscribir al mismo estudiante al mismo tiempo | Debe permitirse un solo registro. La unicidad debe garantizarse también al guardar, no solo en pantalla. |
+
+**Objetivo:** evitar doble registro y doble cobro. Un duplicado nunca debe generar un segundo importe. En el [modelo de datos](modelo-datos.md) esta regla se aplica como una restricción única sobre (`id_participante`, `id_area`, `id_edicion`) en la inscripción.
+
+**Por confirmar con la organización:** si una inscripción cancelada o con pago rechazado libera el cupo para volver a inscribirse.
+
+### 3.3 Control del límite de áreas por estudiante
+
+La convocatoria FNI 2026 establece **hasta tres áreas por estudiante**. El sistema debe hacer cumplir esta regla de forma automática.
+
+**Reglas**
+
+1. El límite se cuenta **por estudiante y por edición**.
+2. Se cuenta **por área**, no por prueba. Por ejemplo, la prueba teórica y la experimental de Química son una sola área, y las etapas clasificatoria y final de Matemática también.
+3. Cuentan las áreas con inscripción **pendiente de pago o confirmada**. Una inscripción cancelada no cuenta.
+4. Se incluyen las áreas que el estudiante ya tenga registradas antes, aunque hayan sido hechas en otra sesión o por otra delegación.
+5. El valor máximo (hoy, 3) debe ser **configurable por edición**, porque puede cambiar cada gestión.
+
+**Cuándo se verifica**
+
+| Momento | Comportamiento |
+| --- | --- |
+| Al seleccionar áreas | Al marcar la tercera área, las demás opciones quedan deshabilitadas con una explicación. |
+| Al confirmar | Se vuelve a contar para detectar cambios hechos mientras se llenaba el formulario. |
+| En una delegación | Se verifica **de forma independiente para cada estudiante** de la lista. |
+
+**Ejemplos**
+
+| Áreas ya inscritas | Intenta agregar | Resultado |
+| --- | --- | --- |
+| 0 | 1 área | Permitido. Costo total: Bs 20. |
+| 2 | 1 área | Permitido. Costo total: Bs 60. |
+| 3 | 1 área más | Rechazado. Mensaje: «El estudiante ya tiene el máximo de áreas permitidas». |
+| 3, y se quita una | 1 área distinta | Permitido, porque quitar un área libera un cupo (si aún no se pagó). |
+
+Si en una delegación un estudiante supera el límite, el error se muestra **solo en la fila de ese estudiante** y no impide registrar a los demás.
+
+El máximo de áreas no puede garantizarse solo con una clave única: según [modelo-datos.md](modelo-datos.md), requiere una validación transaccional al guardar. La incompatibilidad horaria entre áreas se detalla en [validacion-horarios.md](validacion-horarios.md).
+
+**Por confirmar con la organización:** qué ocurre si se quiere cambiar un área ya pagada por otra.
+
 ### Cursos admitidos (referencia general FNI 2026)
 
 | Área | Cursos o categorías |
@@ -108,6 +191,68 @@ La página de Olimpiadas FNI menciona un QR para **acceder al formulario**; esto
 5. Tras la verificación, cambiar el estado a `confirmado` y emitir un comprobante.
 6. Incluir en el comprobante identificador único, edición, participante o delegación, áreas, importe, fecha, estado y referencia de transacción si corresponde.
 7. Permitir consultar o descargar el comprobante con protección de datos personales.
+
+### 6.1 Cómo encaja el pago en la inscripción
+
+El detalle del costo, del método de pago y de la validación del comprobante está en [pagos-y-comprobantes.md](pagos-y-comprobantes.md). Aquí se describe cómo se conecta con el flujo de inscripción.
+
+**Inscripción individual**
+
+1. Tras revisar los datos, el sistema muestra las áreas elegidas y el importe total (Bs 20 por área).
+2. Al confirmar la inscripción, el pago queda en estado `pendiente`.
+3. El participante o su tutor paga escaneando el QR con la aplicación de banca móvil y conserva el comprobante de su entidad.
+4. Registra en el sistema el comprobante con su referencia de transacción.
+5. El sistema valida el monto, que la referencia no se haya usado antes y que corresponda a la inscripción.
+6. Si la validación es correcta, el pago pasa a `confirmado`, la inscripción queda confirmada y se emite el comprobante.
+
+**Inscripción por delegación**
+
+- El importe total es la suma de los importes de cada estudiante.
+- Se propone permitir **un solo pago por delegación**, con el detalle por estudiante y área. Esto debe validarse con la organización. El [modelo de datos](modelo-datos.md) ya contempla este caso mediante la entidad `PAGO_INSCRIPCION`.
+- Si un estudiante se retira antes de confirmar, el total se recalcula.
+
+### 6.2 Estados del pago e impacto en la inscripción
+
+| Estado | Significado | Efecto en la inscripción |
+| --- | --- | --- |
+| `pendiente` | El pago fue informado o aún no se registró, y no se ha verificado. | La inscripción está registrada pero **no confirmada**. Sus áreas cuentan para el límite de tres (ver 3.3). |
+| `confirmado` | El pago fue verificado. | La inscripción queda **confirmada** y se emite el comprobante. |
+
+- El único paso permitido es de `pendiente` a `confirmado`, y solo cuando la validación es correcta.
+- Si la validación falla, el pago **permanece `pendiente`** y el sistema informa el motivo, para que el usuario corrija el dato o consulte a la organización.
+- Subir una captura o mostrar el QR no equivale por sí solo a un pago confirmado.
+
+### 6.3 Casos especiales (propuesta)
+
+| Caso | Tratamiento propuesto |
+| --- | --- |
+| El monto pagado no coincide con el importe total | El pago permanece `pendiente`. Se informa la diferencia. La resolución (completar o devolver) la define la organización. |
+| La referencia de transacción ya fue usada en otra inscripción | El pago permanece `pendiente` y se informa el motivo. |
+| El comprobante no corresponde a la inscripción que se paga | El pago permanece `pendiente` y se informa el motivo. |
+| Se paga dos veces la misma inscripción | No se genera un segundo comprobante. El segundo pago se deriva a la organización para su revisión. |
+| El pago llega cuando el plazo del área ya cerró | **Por definir** con la organización. |
+
+### 6.4 Emisión del comprobante
+
+El comprobante se emite **solo cuando el pago está `confirmado`**.
+
+**Contenido mínimo**
+
+- Datos de la inscripción (participante, o delegación y unidad educativa, y áreas).
+- Importe total.
+- Fecha de la confirmación.
+- Estado del pago.
+- Referencia de transacción.
+- Propuesta adicional: identificador único del comprobante y edición de la Olimpiada.
+
+**Reglas**
+
+1. Cada comprobante tiene un identificador **único e irrepetible**.
+2. Un comprobante emitido no se edita. Si hay un error, se emite uno nuevo y se conserva el historial.
+3. Lo puede consultar el Tutor desde el sistema, y los usuarios de la organización autorizados según su rol.
+4. Debe mostrar solo los datos necesarios, por la protección de datos de menores de edad.
+
+La emisión de constancias y credenciales de inscripción corresponde a otro requisito del proyecto y no se detalla aquí. Las restricciones propuestas para la credencial digital están en [datos.md](datos.md).
 
 **Pendiente de definición:** cuenta beneficiaria, proveedor de pagos, verificación y conciliación, tratamiento de pagos fallidos o duplicados y formato oficial del comprobante. No inventar datos bancarios ni prometer emisión automática antes de su implementación.
 
